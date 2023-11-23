@@ -2,8 +2,7 @@
 # this script print out Best School using untill loop
 
 count=0
-until [ $count -eq 10 ]
-do
+until [ $count -eq 10 ]; do
     echo "Best School"
     ((count++))
 done
