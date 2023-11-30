@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# displaing lines that cointain the bash word 
+#it must allowing me to easily get the PID
+# can not use pgrep
+# the third line of the script must be shellchell disable=sc2009
+
+ps aux | grep "bash"
