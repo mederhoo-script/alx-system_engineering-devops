@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
 # Script to display PID and process name of bash processes
 
-pgrep bash -l
+# Get the PPID (Parent Process ID) of the script
+SCRIPT_PPID=$PPID
+
+# Find bash processes with the same PPID, excluding the script itself
+BASH_PROCESSES=$(pgrep -P "$SCRIPT_PPID" -f bash | grep -v "$0")
+
+# Display PID and process name of the found bash processes
+for PID in $BASH_PROCESSES; do
+  PROCESS_NAME=$(ps -o comm= -p "$PID")
+  echo "$PID $PROCESS_NAME"
+done
