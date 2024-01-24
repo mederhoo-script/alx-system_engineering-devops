@@ -2,8 +2,5 @@
 
 # Script to connect to a server using a private key
 
-# Define the server's IP address or hostname
-my_server_address="3.80.19.171"
-
 # Connect to the server using ssh
-ssh -i ~/.ssh/school ubuntu@$my_server_address
+ssh -i ~/.ssh/school ubuntu@3.80.19.171
