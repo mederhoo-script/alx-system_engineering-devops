@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Get the hostname of the server
+hostname=$(hostname)
+
+# Configure Nginx to add custom header
+sudo sed -i "/server/a add_header X-Served-By $hostname;" /etc/nginx/sites-available/default
+
+# Reload Nginx to apply changes
+sudo systemctl reload nginx
+
