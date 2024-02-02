@@ -5,18 +5,14 @@ sudo add-apt-repository -y ppa:vbernat/haproxy-2.9
 sudo apt-get install -y haproxy=2.9.\*
 echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 echo "
-frontend http
+    listen load_balancer
     bind *:80
     mode http
-    default_backend web_servers
-
-backend web_servers
     balance roundrobin
     option httpclose
-    option forwardfor
     server 447548-web-01 3.80.19.171:80 check
     server 447548-web-02 100.26.240.91:80 check
-    " >> /etc/haproxy/haproxy.cfg
+" | sudo tee -a /etc/haproxy/haproxy.cfg
 
 sudo service haproxy start
 
