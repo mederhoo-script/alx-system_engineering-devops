@@ -27,10 +27,8 @@ sudo mv -f default /etc/nginx/sites-available/default
 
 hostname=$(hostname)
 
-# Check if the add_header directive already exists in the Nginx configuration
-if ! grep -q "add_header X-Served-By $hostname;" /etc/nginx/sites-enabled/default; then
-    # Add the add_header directive to the Nginx configuration
-    sudo sed -i "/server_name _;/a add_header X-Served-By $hostname;" /etc/nginx/sites-enabled/default
+# Add the add_header directive to the Nginx configuration
+sudo sed -i "/server_name _;/a add_header X-Served-By $hostname;" /etc/nginx/sites-enabled/default
 
-    # Reload Nginx to apply changes
-    sudo service nginx restart
+# Reload Nginx to apply changes
+sudo service nginx restart
