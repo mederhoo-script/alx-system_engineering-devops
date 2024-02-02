@@ -19,7 +19,7 @@ redi_value=\
    location = /404.html{
       internal;
    }"
-if ! grep -q $redi_value /etc/nginx/sites-enabled/default; then
+if ! grep -q "$redi_value" /etc/nginx/sites-enabled/default; then
     sudo sed -i "/server_name _;/a $redi_value" /etc/nginx/sites-enabled/default
 
 hostname=$(hostname)
