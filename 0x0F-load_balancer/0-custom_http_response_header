@@ -33,4 +33,4 @@ if ! grep -q "add_header X-Served-By $hostname;" /etc/nginx/sites-enabled/defaul
     sudo sed -i "/server_name _;/a add_header X-Served-By $hostname;" /etc/nginx/sites-enabled/default
 
     # Reload Nginx to apply changes
-    sudo service nginx reload
+    sudo service nginx restart
