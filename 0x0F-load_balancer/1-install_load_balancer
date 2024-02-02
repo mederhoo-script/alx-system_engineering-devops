@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# installing and configure haproxy
+apt-get install -y --no-install-recommends software-properties-common
+sudo add-apt-repository -y ppa:vbernat/haproxy-2.9
+sudo apt-get install -y haproxy=2.9.\*
+echo "
+frontend http-in
+    bind *:80
+    mode http
+    default_backend web_servers
+
+backend web_servers
+    balance roundrobin
+    server 447548-web-01 3.80.19.171:80 check
+    server 447548-web-02 100.26.240.91:80 check
+    " >> /etc/haproxy/haproxy.cfg
+
+sudo service haproxy start
+
