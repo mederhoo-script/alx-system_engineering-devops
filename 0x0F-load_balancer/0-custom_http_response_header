@@ -2,9 +2,13 @@
 # Get the hostname of the server
 hostname=$(hostname)
 
-# Configure Nginx to add custom header
-sudo sed -i "/server/a add_header X-Served-By $hostname;" /etc/nginx/sites-available/default
+# Check if the add_header directive already exists in the Nginx configuration
+if ! grep -q "add_header X-Served-By $hostname;" /etc/nginx/sites-enabled/default; then
+    # Add the add_header directive to the Nginx configuration
+    sudo sed -i "/server_name _;/a add_header X-Served-By $hostname;" /etc/nginx/sites-enabled/default
 
-# Reload Nginx to apply changes
-sudo systemctl reload nginx
-
+    # Reload Nginx to apply changes
+    sudo service nginx reload
+else
+    echo "add_header directive already exists in Nginx configuration."
+fi
