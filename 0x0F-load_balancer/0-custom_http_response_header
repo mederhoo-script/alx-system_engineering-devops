@@ -12,13 +12,13 @@ sudo mv 404.html /var/www/html
 
 # creating a redirect
 redi_value=\
-location /redirect_me {
+"location /redirect_me {
       return 301 https://sites.google.com/view/mederhoo-portfolio/home;
       }
    error_page 404 /404.html;
    location = /404.html{
       internal;
-   }
+   }"
 if ! grep -q $redi_value /etc/nginx/sites-enabled/default; then
     sudo sed -i "/server_name _;/a $redi_value" /etc/nginx/sites-enabled/default
 
