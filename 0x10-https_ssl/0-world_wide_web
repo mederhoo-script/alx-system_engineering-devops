@@ -1,2 +1,29 @@
 #!/usr/bin/env bash
-# show where subdomain poin to
+# checkin my subdomain pointer
+
+get_subdomain_info() {
+    sub_domain=$2
+    domain=$1
+
+    dig_output=$(dig "$sub_domain.$domain" | awk '/ANSWER SECTION:/ {getline; print}')
+    record_type=$(echo "$dig_output" | awk '{print $4}')
+    destination=$(echo "$dig_output" | awk '{print $5}')
+
+    echo "The subdomain $sub_domain is a $record_type record and points to $destination"
+}
+
+main() {
+    domain=$1
+    subdomain=$2
+
+    if [ -z "$subdomain" ]; then
+        subdomains=("www" "lb-01" "web-01" "web-02")
+        for sub in "${subdomains[@]}"; do
+            get_subdomain_info "$domain" "$sub"
+        done
+    else
+        get_subdomain_info "$domain" "$subdomain"
+    fi
+}
+
+main "$@"
