@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Configures a ufw firewall to block all incoming traffic
-sudo apt_get update -y
+sudo apt-get update -y
 sudo apt-get install ufw -y
-sudo sed -i 's/IPV6=.*/IPV6=yes/' /etc/default/ufw
+sudo sed -i 's/IPV6=.*/IPV6=yes/' /etc/default/ufw -y
 sudo ufw disable
-sudo ufw enable
+sudo ufw enable -y
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 22/tcp
