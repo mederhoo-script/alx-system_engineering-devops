@@ -59,8 +59,9 @@ def main():
     name = user_info['name']
     total_tasks = len(todos)
     done_tasks = [t.get("title") for t in todos if t.get("completed") is True]
+    c = len(done_tasks)
 
-    print(f"Employee {name} is done with tasks ({len(done_tasks)}/{total_tasks}):")
+    print(f"Employee {name} is done with tasks ({c}/{total_tasks}):")
     for title in done_tasks:
         print("\t{}".format(title))
 
