@@ -8,6 +8,15 @@ import sys
 
 
 def fetch_user_info(emp_id):
+    """fetch user data
+
+Args:
+    emp_id (int): employee id
+
+Returns:
+    user data: dict
+"""
+
     users_url = f"https://jsonplaceholder.typicode.com/users/{emp_id}"
     response = requests.get(users_url)
     if response.status_code == 200:
@@ -19,6 +28,12 @@ def fetch_user_info(emp_id):
 
 
 def fetch_todo_list(emp_id):
+    """_summary_
+    Args:
+        emp_id (_type_): _description_
+    Returns:
+    emp_id (int)
+    """
     todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={emp_id}"
     response = requests.get(todos_url)
     if response.status_code == 200:
@@ -30,6 +45,8 @@ def fetch_todo_list(emp_id):
 
 
 def main():
+    """main
+    """
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
         print("Usage: python3 script.py <employee_id>")
         sys.exit(1)
