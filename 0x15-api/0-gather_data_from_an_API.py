@@ -61,9 +61,8 @@ def main():
     done_tasks = [t.get("title") for t in todos if t.get("completed") is True]
 
     print(f"Employee {name} is done with tasks ({len(done_tasks)}/{total_tasks}):")
-    for todo in todos:
-        if todo['completed']:
-            print("    {}".format(todo['title']))
+    for title in done_tasks:
+        print("\t{}".format(title))
 
 
 if __name__ == "__main__":
