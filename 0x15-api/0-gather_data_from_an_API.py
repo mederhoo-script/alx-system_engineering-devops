@@ -46,7 +46,7 @@ def main():
     print(f"Employee {name} is done with tasks ({done_tasks}/{total_tasks}):")
     for todo in todos:
         if todo['completed']:
-            print(f"    {todo['title']}")
+            print("    {}".format(todo['title']))
 
 
 if __name__ == "__main__":
