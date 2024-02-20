@@ -7,6 +7,7 @@ import requests
 import sys
 import csv
 
+
 def fetch_user_info(emp_id):
     """fetch user data
 
