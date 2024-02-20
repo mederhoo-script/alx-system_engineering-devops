@@ -56,14 +56,10 @@ def main():
     user_info = fetch_user_info(emp_id)
     todos = fetch_todo_list(emp_id)
 
-    name = user_info['name']
-    total_tasks = len(todos)
-    done_tasks = [t.get("title") for t in todos if t.get("completed") is True]
-    c = len(done_tasks)
-
-    print(f"Employee {name} is done with tasks ({c}/{total_tasks}):")
-    for title in done_tasks:
-        print("\t{}".format(title))
+    completed = [t.get("title") for t in todos if t.get("completed") is True]
+    print("Employee {} is done with tasks({}/{}):".format(
+        user_info.get("name"), len(completed), len(todos)))
+    [print("\t {}".format(c)) for c in completed]
 
 
 if __name__ == "__main__":
