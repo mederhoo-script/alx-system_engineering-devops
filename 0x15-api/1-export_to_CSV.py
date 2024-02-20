@@ -64,8 +64,8 @@ def main():
         writer.writeheader()
         for todo in todos:
             writer.writerow({
-                'USER_ID': emp_id,
-                'USERNAME': user_info['name'],
+                'USER_ID': todo['userId'],
+                'USERNAME': user_info['username'],
                 'TASK_COMPLETED_STATUS': todo['completed'],
                 'TASK_TITLE': todo['title']
             })
