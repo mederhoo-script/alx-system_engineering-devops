@@ -55,20 +55,14 @@ def main():
 
     user_info = fetch_user_info(emp_id)
     todos = fetch_todo_list(emp_id)
+    username = user_info.get("username")
 
     csv_file_name = f"{emp_id}.csv"
     with open(csv_file_name, 'w', newline='') as csvfile:
-        fieldnames = ['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS', 'TASK_TITLE']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        
-        writer.writeheader()
-        for todo in todos:
-            writer.writerow({
-                'USER_ID': todo['userId'],
-                'USERNAME': user_info['username'],
-                'TASK_COMPLETED_STATUS': todo['completed'],
-                'TASK_TITLE': todo['title']
-            })
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        [writer.writerow(
+            [emp_id, username, t.get("completed"), t.get("title")]
+         ) for t in todos]
 
 
 if __name__ == "__main__":
