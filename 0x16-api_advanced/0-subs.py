@@ -11,8 +11,6 @@ import requests
 
 def number_of_subscribers(subreddit):
     """get number of subscibers"""
-    if subreddit == "programming":
-        return "existing Subreddit"
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
     headers = {
         "User-Agent": "0x16-api_advanced:project:\
