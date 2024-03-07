@@ -8,7 +8,10 @@ import requests
 def top_ten(subreddit):
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     params = {"limit": 10}
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers = {
+        "User-Agent": "0x16-api_advanced:project:\
+v1.0.0 (by u/Turbulent-Arm-26330)"
+    }
     response = requests.get(url, headers=headers, params=params)
 
     # Check if the response is successful
