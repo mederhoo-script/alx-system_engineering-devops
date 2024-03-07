@@ -8,11 +8,11 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-	"""get number of subscibers"""
-	url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-	response = requests.get(url)
-	if response.status_code == 404:
-		return 0
-	if response.status_code == 200:
-		data = response.json()
-		return data.get("data").get("subscribers")
+    """get number of subscibers"""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    response = requests.get(url)
+    if response.status_code == 404:
+        return 0
+    if response.status_code == 200:
+        data = response.json()
+        return data.get("data").get("subscribers")
