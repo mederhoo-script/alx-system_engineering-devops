@@ -29,13 +29,14 @@ def recurse(subreddit, hot_list=[], after=None):
         for post in posts:
             hot_list.append(post['data']['title'])
         after = data['data']['after']
-        return recurse(subreddit, hot_list, after)  # Recursive call with updated 'after'
+        return recurse(subreddit, hot_list, after)
     elif response.status_code == 404:
         # If the subreddit is invalid or no results found, return None
         return None
     else:
         # If there is an error, return an empty list
         return []
+
 
 # Test the function
 if __name__ == '__main__':
