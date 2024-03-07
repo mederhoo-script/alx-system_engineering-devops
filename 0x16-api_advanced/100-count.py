@@ -9,12 +9,11 @@ but java should not)."""
 import requests
 
 
-def recurse(subreddit, hot_list=[], after=None):
-    """recursive functions"""
-    if not hot_list:  # Initialize the hot_list only in the first call
-        hot_list = []
-    if after == "STOP":  # Base case for recursion
-        return hot_list
+def count_words(subreddit, word_list, after=None, counts=None):
+    """recursive count"""
+    if not counts:  # Initialize counts only in the first call
+        counts = {}
+
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=100"
     if after:
         url += f"&after={after}"
@@ -27,22 +26,33 @@ def recurse(subreddit, hot_list=[], after=None):
         data = response.json()
         posts = data['data']['children']
         for post in posts:
-            hot_list.append(post['data']['title'])
+            title = post['data']['title']
+            for word in word_list:
+                word = word.lower()  # Convert word to lowercase
+                title_words = title.lower().split()
+                if word in title_words:
+                    if word in counts:
+                        counts[word] += 1
+                    else:
+                        counts[word] = 1
         after = data['data']['after']
-        return recurse(subreddit, hot_list, after)
+        if after is None:
+            sorted_counts = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
+            for word, count in sorted_counts:
+                print(f"{word}: {count}")
+            return
+
+        return count_words(subreddit, word_list, after, counts)
     elif response.status_code == 404:
-        # If the subreddit is invalid or no results found, return None
-        return None
+        # If the subreddit is invalid or no results found, print nothing
+        return
     else:
-        # If there is an error, return an empty list
-        return []
+        # If there is an error, print nothing
+        return
 
 
 # Test the function
 if __name__ == '__main__':
     subreddit = input("Enter subreddit: ")
-    result = recurse(subreddit)
-    if result is not None:
-        print(len(result))
-    else:
-        print("None")
+    word_list = input("Enter keywords separated by spaces: ").split()
+    count_words(subreddit, word_list)
