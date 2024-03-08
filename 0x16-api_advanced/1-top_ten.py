@@ -22,7 +22,3 @@ v1.0.0 (by u/Turbulent-Arm-26330)"
         posts = data.get('data').get('children')
         for post in posts:
             print(post.get('data').get('title'))
-
-    else:
-        # Print None if the subreddit is invalid or there is an error
-        print(None)
