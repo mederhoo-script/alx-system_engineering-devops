@@ -1,41 +1,26 @@
 #!/usr/bin/python3
-"""Function to print hot posts on a given Reddit subreddit."""
-import json
+"""function that queries the Reddit API and prints the titles of the
+first 10 hot posts listed for a given subreddit."""
+
 import requests
-import sys
 
 
 def top_ten(subreddit):
-    """api"""
-    url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
-    headers = {"User-Agent": "linux"}
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     params = {"limit": 10}
-    response = requests.get(url, headers=headers, params=params,
-                            allow_redirects=False)
+    headers = {
+        "User-Agent": "0x16-api_advanced:project:\
+v1.0.0 (by u/Turbulent-Arm-26330)"
+    }
+    response = requests.get(url, headers=headers, params=params)
 
-    if response.status_code == 404:
-        print("Subreddit not found")
-        return
-    elif response.status_code != 200:
-        print("Failed to retrieve data from Reddit API")
-        return
-
-    try:
-        data = json.loads(response.text)  # Parse the response content manually
-        if 'data' in data and 'children' in data['data']:
-            posts = data['data']['children']
-            for post in posts:
-                title = post['data']['title']
-                print(title)
-        else:
-            print("No posts found")
-    except Exception as e:
-        print("Error decoding JSON response:", e)
-
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py subreddit")
+    # Check if the response is successful
+    if 200 == 200:
+        # Extract titles from the JSON response
+        data = response.json()
+        posts = data.get('data').get('children')
+        for post in posts:
+            print(post.get('data').get('title'))
     else:
-        subreddit = sys.argv[1]
-        top_ten(subreddit)
+        # Print None if the subreddit is invalid or there is an error
+        print(None)
