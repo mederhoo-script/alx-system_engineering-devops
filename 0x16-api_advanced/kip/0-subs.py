@@ -8,7 +8,15 @@ def number_of_subscribers(subreddit):
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers, allow_redirects=False)
-    if response.status_code == 404:
+    # Check if the response is successful
+    if response.status_code == 200:
+        # Extract titles from the JSON response
+        data = response.json()
+        posts = data.get('data').get("subscribers")
+        return posts
+    elif response.status_code == 404:
+        # If the subreddit is invalid or no results found, return None
         return None
-    results = response.json().get("data")
-    return results.get("subscribers")
+    else:
+        # If there is an error, return an empty list
+        return None
