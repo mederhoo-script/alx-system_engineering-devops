@@ -3,6 +3,11 @@
 import requests
 
 
+#!/usr/bin/python3
+"""Function to print hot posts on a given Reddit subreddit."""
+import requests
+
+
 def top_ten(subreddit):
     """Print the titles of the 10 hottest posts on a given subreddit."""
     url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
@@ -18,5 +23,11 @@ def top_ten(subreddit):
         print("None")
         return
     data = response.json()
-    results = data.get("data")
-    [print(c.get("data").get("title")) for c in results.get("children")]
+    # Check if the 'data' key exists in the response
+    if 'data' in data and 'children' in data['data']:
+        posts = data['data']['children']
+        for post in posts:
+            title = post['data']['title']
+            print(title)
+    else:
+        print("No data found in the response.")
