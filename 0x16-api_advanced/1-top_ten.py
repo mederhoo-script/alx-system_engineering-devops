@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Function to print hot posts on a given Reddit subreddit."""
+import json
 import requests
 import sys
-import json
 
 
 def top_ten(subreddit):
