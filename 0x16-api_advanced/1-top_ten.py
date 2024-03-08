@@ -13,7 +13,8 @@ def top_ten(subreddit):
 v1.0.0 (by u/Turbulent-Arm-26330)"
     }
     response = requests.get(url, headers=headers, params=params)
-
+    if response.status_code == 404:
+        print(None)
     # Check if the response is successful
     if response.status_code == 200:
         # Extract titles from the JSON response
@@ -25,4 +26,3 @@ v1.0.0 (by u/Turbulent-Arm-26330)"
     else:
         # Print None if the subreddit is invalid or there is an error
         print(None)
-        return
