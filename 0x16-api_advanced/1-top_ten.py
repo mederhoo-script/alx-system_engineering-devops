@@ -28,7 +28,3 @@ def top_ten(subreddit):
         print(f"HTTP error occurred: {e}")
     except requests.exceptions.RequestException as e:
         print(f"Request error occurred: {e}")
-
-
-# Example usage:
-top_ten("python")
