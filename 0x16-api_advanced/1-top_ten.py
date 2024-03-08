@@ -42,7 +42,7 @@ def top_ten(subreddit, word_list=[], after=None, counts=None):
                 print(f"{word}: {count}")
             return
 
-        return count_words(subreddit, word_list, after, counts)
+        return top_ten(subreddit, word_list, after, counts)
     elif response.status_code == 404:
         # If the subreddit is invalid or no results found, print nothing
         return
@@ -55,4 +55,4 @@ def top_ten(subreddit, word_list=[], after=None, counts=None):
 if __name__ == '__main__':
     subreddit = input("Enter subreddit: ")
     word_list = input("Enter keywords separated by spaces: ").split()
-    count_words(subreddit, word_list)
+    top_ten(subreddit, word_list)
