@@ -6,19 +6,29 @@ import requests
 
 
 def top_ten(subreddit):
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    """api"""
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     params = {"limit": 10}
     headers = {
-        "User-Agent": "0x16-api_advanced:project:\
-v1.0.0 (by u/Turbulent-Arm-26330)"
+        "User-Agent":
+        "0x16-api_advanced:project:v1.0.0 (by u/Turbulent-Arm-26330)"
     }
-    response = requests.get(url, headers=headers, params=params)
-    if response.status_code == 404:
-        print(None)
-    # Check if the response is successful
-    if response.status_code == 200:
-        # Extract titles from the JSON response
+
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an exception for HTTP errors
         data = response.json()
-        posts = data.get('data').get('children')
+        posts = data.get('data', {}).get('children', [])
+        if not posts:
+            print(f"No hot posts found in subreddit: {subreddit}")
+            return
         for post in posts:
-            print(post.get('data').get('title'))
+            print(post.get('data', {}).get('title'))
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP error occurred: {e}")
+    except requests.exceptions.RequestException as e:
+        print(f"Request error occurred: {e}")
+
+
+# Example usage:
+top_ten("python")
