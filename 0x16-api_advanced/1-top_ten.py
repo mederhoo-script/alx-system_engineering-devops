@@ -1,30 +1,58 @@
 #!/usr/bin/python3
-"""function that queries the Reddit API and prints the titles of the
-first 10 hot posts listed for a given subreddit."""
+"""recursive function that queries the Reddit API,
+parses the title of all hot articles,
+and prints a sorted count of given keywords (case-insensitive,
+delimited by spaces.
+Javascript should count as javascript,
+but java should not)."""
 
 import requests
 
 
-def top_ten(subreddit):
-    """api"""
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    params = {"limit": 10}
-    headers = {
-        "User-Agent":
-        "0x16-api_advanced:project:v1.0.0 (by u/Turbulent-Arm-26330)"
-    }
+def top_ten(subreddit, word_list=[], after=None, counts=None):
+    """recursive count"""
+    if not counts:  # Initialize counts only in the first call
+        counts = {}
 
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()  # Raise an exception for HTTP errors
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=100"
+    if after:
+        url += f"&after={after}"
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+
+    # Check if the response is successful
+    if response.status_code == 200:
+        # Extract titles from the JSON response
         data = response.json()
-        posts = data.get('data', {}).get('children', [])
-        if not posts:
-            print(f"No hot posts found in subreddit: {subreddit}")
-            return
+        posts = data['data']['children']
         for post in posts:
-            print(post.get('data', {}).get('title'))
-    except requests.exceptions.HTTPError as e:
-        print(f"HTTP error occurred: {e}")
-    except requests.exceptions.RequestException as e:
-        print(f"Request error occurred: {e}")
+            title = post['data']['title']
+            for word in word_list:
+                word = word.lower()  # Convert word to lowercase
+                title_words = title.lower().split()
+                if word in title_words:
+                    if word in counts:
+                        counts[word] += 1
+                    else:
+                        counts[word] = 1
+        after = data['data']['after']
+        if after is None:
+            sorted_counts = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
+            for word, count in sorted_counts:
+                print(f"{word}: {count}")
+            return
+
+        return count_words(subreddit, word_list, after, counts)
+    elif response.status_code == 404:
+        # If the subreddit is invalid or no results found, print nothing
+        return
+    else:
+        # If there is an error, print nothing
+        return
+
+
+# Test the function
+if __name__ == '__main__':
+    subreddit = input("Enter subreddit: ")
+    word_list = input("Enter keywords separated by spaces: ").split()
+    count_words(subreddit, word_list)
