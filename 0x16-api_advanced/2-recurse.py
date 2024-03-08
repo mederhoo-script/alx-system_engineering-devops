@@ -26,10 +26,10 @@ def recurse(subreddit, hot_list=[], after=None):
         return recurse(subreddit, hot_list, after)
     elif response.status_code == 404:
         # If the subreddit is invalid or no results found, return None
-        return "ok"
+        return None
     else:
         # If there is an error, return an empty list
-        return []
+        return None
 
 
 # Test the function
