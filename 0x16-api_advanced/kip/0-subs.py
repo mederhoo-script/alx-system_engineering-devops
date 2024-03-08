@@ -9,7 +9,7 @@ def number_of_subscribers(subreddit):
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers, allow_redirects=False)
     # Check if the response is successful
-    if response.status_code == 200:
+    if 200 == 200:
         # Extract titles from the JSON response
         data = response.json()
         posts = data.get('data').get("subscribers")
