@@ -4,7 +4,7 @@ import requests
 import sys
 
 
-def top_ten(subreddit):
+def top_tens(subreddit):
     url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
     headers = {"User-Agent": "linux"}
     params = {"limit": 10}
